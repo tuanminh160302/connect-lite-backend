@@ -18,7 +18,7 @@ const typeDefs = gql`
         name: String!
         photoURL: String!
         description: String!
-        field: String!
+        id: String!
     }
 `;
 
