@@ -19,6 +19,16 @@ const typeDefs = gql`
         photoURL: String!
         description: String!
         id: String!
+        skillIn: CATEGORY! @relationship(type:"SKILL_IN", direction: OUT)
+    }
+
+    type CATEGORY {
+        value: String!
+        hasSkill: [Skill!]! @relationship(type:"SKILL_IN", direction: IN)
+    }
+
+    type JOB_ROLE {
+        value: String!
     }
 `;
 
