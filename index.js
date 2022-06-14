@@ -11,7 +11,7 @@ const typeDefs = gql`
         displayName: String!
         photoURL: String
         uid: String!
-        # actors: [Actor!]! @relationship(type: "ACTED_IN", direction: IN)
+        hasSkill: [Skill!]! @relationship(type: "HAS_SKILL", properties: "SkillLevel", direction: OUT)
     }
 
     type Skill {
@@ -20,6 +20,7 @@ const typeDefs = gql`
         description: String!
         id: String!
         skillIn: CATEGORY! @relationship(type:"SKILL_IN", direction: OUT)
+        knownBy: [User!]! @relationship(type:"KNOWN_BY", direction: IN)
     }
 
     type CATEGORY {
@@ -29,6 +30,14 @@ const typeDefs = gql`
 
     type JOB_ROLE {
         value: String!
+    }
+
+    type Admin {
+        uid: String!
+    }
+
+    interface SkillLevel @relationshipProperties {
+        level: Int!
     }
 `;
 
