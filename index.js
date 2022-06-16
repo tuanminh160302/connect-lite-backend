@@ -85,7 +85,7 @@ type User {
 `;
 
 const driver = neo4j.driver(
-    "bolt://localhost:7687",
+    "bolt://localhost:11005",
     neo4j.auth.basic("neo4j", "160333")
 );
 
