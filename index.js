@@ -2,43 +2,13 @@ const { Neo4jGraphQL } = require("@neo4j/graphql");
 const { ApolloServer, gql } = require("apollo-server");
 const neo4j = require("neo4j-driver");
 
+const AURA_ENDPOINT = 'neo4j+s://f0f0dfb9.databases.neo4j.io';
+const USERNAME = 'neo4j';
+const PASSWORD = '4DjpE2aRrRZNxmaqTHtRmbjv0bfRrNQbubak1puRH9U';
+
+const driver = neo4j.driver(AURA_ENDPOINT, neo4j.auth.basic(USERNAME, PASSWORD) );
 
 const typeDefs = gql`
-    # type User {
-    #     username: String!
-    #     email: String!
-    #     createdAt: String
-    #     displayName: String!
-    #     photoURL: String
-    #     uid: String!
-    #     hasSkill: [Skill!]! @relationship(type: "HAS_SKILL", properties: "SkillLevel", direction: OUT)
-    # }
-
-    # type Skill {
-    #     name: String! @unique
-    #     photoURL: String!
-    #     description: String!
-    #     id: String! @unique
-    #     skillIn: CATEGORY! @relationship(type:"SKILL_IN", direction: OUT)
-    #     knownBy: [User!]! @relationship(type:"KNOWN_BY", direction: IN)
-    # }
-
-    # type CATEGORY {
-    #     value: String!
-    #     hasSkill: [Skill!]! @relationship(type:"SKILL_IN", direction: IN)
-    # }
-
-    # type JOB_ROLE {
-    #     value: String!
-    # }
-
-    # type Admin {
-    #     uid: String!
-    # }
-
-    # interface SkillLevel @relationshipProperties {
-    #     level: Int!
-    # }
 type Admin {
 	uid: String!
 	usersIsAdmin: [User!]! @relationship(type: "IS_ADMIN", direction: IN, properties: "IsAdminProperties")
@@ -83,11 +53,6 @@ type User {
 	username: String!
 }
 `;
-
-const driver = neo4j.driver(
-    "bolt://localhost:11005",
-    neo4j.auth.basic("neo4j", "160333")
-);
 
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 
